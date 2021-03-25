@@ -1,4 +1,4 @@
-class Solution:
+class Solution: # beat 93% [i,j]
     def balancedString(self, s: str) -> int:
         c = Counter(list(s))
         L = len(s)
@@ -12,20 +12,17 @@ class Solution:
             return 0
 
         minv = float('inf')
-        i, j = 0, 0
-        while (need > 0 and j < len(s)) or (need == 0 and i < j): 
-            if need > 0:
-                c[s[j]] += 1
-                if c[s[j]] == 0:
-                    need -= 1
-                j += 1
-            else:
+        i = 0
+        for j, chj in enumerate(s):
+            c[chj] += 1
+            if c[chj] == 0:
+                need -= 1
+            while need == 0 and i < j+1:
                 if c[s[i]] == 0:
+                    minv = min(minv, j+1 - i)
                     need += 1
                 c[s[i]] -= 1    
                 i += 1
-            if need == 0:
-                minv = min(minv, j - i)
         return minv
     
     """
