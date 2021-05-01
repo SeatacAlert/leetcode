@@ -1,3 +1,5 @@
+# 虽然我们需要从i到j的和来判定，但是直接保存i到j的和不容易
+# 这里保存的是1-i的和，那么用1-j的和减去1-i的和，即可得到i到j的和
 class Solution:
     def pathSum(self, root: TreeNode, targetSum: int) -> int:
         self.result = 0
