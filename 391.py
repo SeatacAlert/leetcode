@@ -1,3 +1,5 @@
+#这是我的解：
+#
 #对每个点(x,y)，它存在四个象限的角 [(-1,-1), (-1,1), (1,-1), (1,1)]
 #当邻角比如(-1,-1),(-1,1)这种相邻角出现时，这个点必定在边上，或内部，必定不是顶点。
 #当出现三个角时，这个点是一个内部顶点，凹点。
@@ -32,4 +34,22 @@ class Solution:
         for key in angles:
             x += abs(angles[key])
         return x == 4
-            
+
+# 下面这是最快解：
+# 进行对称差的更新，即留下最终的单点，但是它统计单点的时候，不区分是哪个方向的角
+# 然后增加面积
+# 然后找出了最小点，即 x+y最小的点 和 x+y最大的点，这四个点可以求出总面积
+# 这个方法是基于
+# 条件1：单点只有4个
+# 条件2：面积相等
+class Solution:
+    def isRectangleCover(self, rectangles: List[List[int]]) -> bool:
+        s, area = set(), 0
+        for x1, y1, x2, y2 in rectangles:
+            s.symmetric_difference_update({(x1, y1), (x1, y2), (x2, y1), (x2, y2)})
+            area += (x2-x1) * (y2-y1)
+        if len(s) != 4:
+            return False
+        x1, y1 = min(s, key = lambda a: a[0]+a[1])
+        x2, y2 = max(s, key = lambda a: a[0]+a[1])
+        return len(s) == 4 and area == (x2-x1) * (y2-y1)
