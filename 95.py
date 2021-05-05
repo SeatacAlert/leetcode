@@ -1,5 +1,5 @@
 # 二叉树必须用dfs，但是dfs也可以通过保存状态的方式来节约量 
-# 最佳解
+# 最佳解，这里用tuple是个好习惯，面试的时候尽量用tuple，而且在tuple内居然用了列表表达式
 from functools import lru_cache
 
 class Solution:    
